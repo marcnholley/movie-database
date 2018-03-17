@@ -1,0 +1,149 @@
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'movies'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `movies`;
+		
+CREATE TABLE `movies` (
+  `movie_id` INTEGER NULL DEFAULT NULL,
+  `title` VARCHAR(50) NULL DEFAULT NULL,
+  `year` DATE NULL DEFAULT NULL,
+  `rating_id` INTEGER NULL DEFAULT NULL,
+  `imdb_link` VARCHAR(100) NULL DEFAULT NULL,
+  `imdb_score` DECIMAL NULL DEFAULT NULL,
+  `notes` VARCHAR(100) NULL DEFAULT NULL,
+  `description` VARCHAR(100) NULL DEFAULT NULL,
+  `movie_key` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  PRIMARY KEY (`movie_key`)
+);
+
+-- ---
+-- Table 'people'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `people`;
+		
+CREATE TABLE `people` (
+  `people_id` INTEGER NULL DEFAULT NULL,
+  `director` VARCHAR(50) NULL DEFAULT NULL,
+  `writer` VARCHAR(50) NULL DEFAULT NULL,
+  `people_key` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  PRIMARY KEY (`people_key`)
+);
+
+-- ---
+-- Table 'genres'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `genres`;
+		
+CREATE TABLE `genres` (
+  `genre_id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `main_genre` VARCHAR(30) NULL DEFAULT NULL,
+  `sub_genres` VARCHAR(30) NULL DEFAULT NULL,
+  PRIMARY KEY (`genre_id`)
+);
+
+-- ---
+-- Table 'movies_people'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `movies_people`;
+		
+CREATE TABLE `movies_people` (
+  `role_id` INTEGER NULL DEFAULT NULL,
+  `movie_key` INTEGER NULL DEFAULT NULL,
+  `people_key` INTEGER NULL DEFAULT NULL
+);
+
+-- ---
+-- Table 'people_genres'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `people_genres`;
+		
+CREATE TABLE `people_genres` (
+  `genre_id` INTEGER NULL DEFAULT NULL,
+  `people_key` INTEGER NULL DEFAULT NULL
+);
+
+-- ---
+-- Table 'roles'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `roles`;
+		
+CREATE TABLE `roles` (
+  `role_id` INTEGER NULL DEFAULT NULL,
+  `actor` VARCHAR(50) NULL DEFAULT NULL,
+  `actor_order` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+);
+
+-- ---
+-- Table 'ratings'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `ratings`;
+		
+CREATE TABLE `ratings` (
+  `rating_id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `movie_rating` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`rating_id`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+ALTER TABLE `movies` ADD FOREIGN KEY (rating_id) REFERENCES `ratings` (`rating_id`);
+ALTER TABLE `movies_people` ADD FOREIGN KEY (role_id) REFERENCES `roles` (`role_id`);
+ALTER TABLE `movies_people` ADD FOREIGN KEY (movie_key) REFERENCES `movies` (`movie_key`);
+ALTER TABLE `movies_people` ADD FOREIGN KEY (people_key) REFERENCES `people` (`people_key`);
+ALTER TABLE `people_genres` ADD FOREIGN KEY (genre_id) REFERENCES `genres` (`genre_id`);
+ALTER TABLE `people_genres` ADD FOREIGN KEY (people_key) REFERENCES `people` (`people_key`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `movies` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `people` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `genres` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `movies_people` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `people_genres` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `roles` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `ratings` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `movies` (`movie_id`,`title`,`year`,`rating_id`,`imdb_link`,`imdb_score`,`notes`,`description`,`movie_key`) VALUES
+-- ('','','','','','','','','');
+-- INSERT INTO `people` (`people_id`,`director`,`writer`,`people_key`) VALUES
+-- ('','','','');
+-- INSERT INTO `genres` (`genre_id`,`main_genre`,`sub_genres`) VALUES
+-- ('','','');
+-- INSERT INTO `movies_people` (`role_id`,`movie_key`,`people_key`) VALUES
+-- ('','','');
+-- INSERT INTO `people_genres` (`genre_id`,`people_key`) VALUES
+-- ('','');
+-- INSERT INTO `roles` (`role_id`,`actor`,`actor_order`) VALUES
+-- ('','','');
+-- INSERT INTO `ratings` (`rating_id`,`movie_rating`) VALUES
+-- ('','');

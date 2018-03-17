@@ -1,0 +1,9 @@
+movies
+join
+people
+join
+genres
+roles
+foreign key movies join people
+ratings
+foreign key movies table
